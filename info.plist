@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string></string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>9F1354B8-20AB-4BC0-A739-4D12C44B6AB4</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>CBD46E1B-F512-479D-9943-EB05876F57DB</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>CF3F52DA-E4AE-4984-A6D3-89E32BBFE8BB</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>C906ED54-30E7-4FE2-96A8-4FF9D7D8FB55</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Mark@Maxustech</string>
+	<key>description</key>
+	<string>Connect VPN with alfred</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Connect VPN</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query="{query}"
+
+function vpn_connect() {
+/usr/bin/env osascript &lt;&lt;-EOF
+tell application "System Events"
+    tell current location of network preferences
+        set VPN to service "$1" 
+        if exists VPN then connect VPN
+    end tell
+end tell
+EOF
+}
+
+if [ -z "$query" ]; then
+	vpn_connect yy
+else
+	vpn_connect $query
+fi</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>CBD46E1B-F512-479D-9943-EB05876F57DB</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>vpn</string>
+				<key>text</key>
+				<string>Connect VPN</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>9F1354B8-20AB-4BC0-A739-4D12C44B6AB4</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query="{query}"
+
+function vpn_disconnect() {
+/usr/bin/env osascript &lt;&lt;-EOF
+tell application "System Events"
+    tell current location of network preferences
+		set VPNService to a reference to (first service whose (kind is 13 or kind is 16) and connected of current configuration is true)
+        if exists VPNService then disconnect VPNService
+    end tell
+end tell
+return
+EOF
+}
+
+vpn_disconnect</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>C906ED54-30E7-4FE2-96A8-4FF9D7D8FB55</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>disconnectvpn</string>
+				<key>text</key>
+				<string>Disconnect VPN</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>CF3F52DA-E4AE-4984-A6D3-89E32BBFE8BB</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>9F1354B8-20AB-4BC0-A739-4D12C44B6AB4</key>
+		<dict>
+			<key>ypos</key>
+			<real>60</real>
+		</dict>
+		<key>C906ED54-30E7-4FE2-96A8-4FF9D7D8FB55</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
+		</dict>
+		<key>CBD46E1B-F512-479D-9943-EB05876F57DB</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>CF3F52DA-E4AE-4984-A6D3-89E32BBFE8BB</key>
+		<dict>
+			<key>ypos</key>
+			<real>180</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
